@@ -336,7 +336,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: AppTheme.accentColor),
+          Icon(icon, size: 18, color: AppTheme.secondaryAccentColor),
           const SizedBox(width: 16),
           Expanded(
             child: Column(

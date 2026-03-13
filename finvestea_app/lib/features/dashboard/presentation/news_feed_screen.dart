@@ -180,13 +180,13 @@ class NewsFeedScreen extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppTheme.accentColor.withOpacity(0.1),
+                      color: AppTheme.secondaryAccentColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
                       article.tag,
                       style: const TextStyle(
-                        color: AppTheme.accentColor,
+                        color: AppTheme.secondaryAccentColor,
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                       ),

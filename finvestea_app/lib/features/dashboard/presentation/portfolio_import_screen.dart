@@ -174,20 +174,24 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: AppTheme.accentColor.withOpacity(0.15),
+              color: AppTheme.secondaryAccentColor.withOpacity(0.15),
               borderRadius: BorderRadius.circular(20),
-              border:
-                  Border.all(color: AppTheme.accentColor.withOpacity(0.4)),
+              border: Border.all(
+                color: AppTheme.secondaryAccentColor.withOpacity(0.4),
+              ),
             ),
             child: const Row(
               children: [
-                Icon(LucideIcons.sparkles,
-                    size: 14, color: AppTheme.accentColor),
+                Icon(
+                  LucideIcons.sparkles,
+                  size: 14,
+                  color: AppTheme.secondaryAccentColor,
+                ),
                 SizedBox(width: 4),
                 Text(
                   'AI Powered',
                   style: TextStyle(
-                    color: AppTheme.accentColor,
+                    color: AppTheme.secondaryAccentColor,
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
                   ),
@@ -304,18 +308,12 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
             const SizedBox(height: 20),
             const Text(
               'Tap to Upload File',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             const Text(
               'or drag and drop your file here',
-              style: TextStyle(
-                color: AppTheme.textSecondary,
-                fontSize: 13,
-              ),
+              style: TextStyle(color: AppTheme.textSecondary, fontSize: 13),
             ),
             const SizedBox(height: 20),
             Row(
@@ -362,7 +360,11 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
       decoration: AppTheme.glassDecoration,
       child: Column(
         children: [
-          const Icon(LucideIcons.fileUp, size: 40, color: AppTheme.primaryColor),
+          const Icon(
+            LucideIcons.fileUp,
+            size: 40,
+            color: AppTheme.primaryColor,
+          ),
           const SizedBox(height: 16),
           Text(
             _selectedFileName ?? 'file.xlsx',
@@ -381,8 +383,7 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
           const SizedBox(height: 12),
           Text(
             '${(_uploadProgress * 100).toInt()}% — Uploading & Analyzing...',
-            style: const TextStyle(
-                color: AppTheme.textSecondary, fontSize: 13),
+            style: const TextStyle(color: AppTheme.textSecondary, fontSize: 13),
           ),
         ],
       ),
@@ -427,13 +428,11 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
           const SizedBox(height: 6),
           Text(
             _selectedFileName ?? 'portfolio.xlsx',
-            style: const TextStyle(
-                color: AppTheme.textSecondary, fontSize: 13),
+            style: const TextStyle(color: AppTheme.textSecondary, fontSize: 13),
           ),
           const SizedBox(height: 12),
           Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             decoration: BoxDecoration(
               color: AppTheme.primaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(20),
@@ -455,14 +454,23 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
   Widget _buildFormatSupportRow() {
     return Row(
       children: [
-        _buildSupportItem(LucideIcons.fileSpreadsheet, 'Excel\n(.xlsx / .xls)',
-            AppTheme.primaryColor),
+        _buildSupportItem(
+          LucideIcons.fileSpreadsheet,
+          'Excel\n(.xlsx / .xls)',
+          AppTheme.primaryColor,
+        ),
         const SizedBox(width: 12),
-        _buildSupportItem(LucideIcons.fileText, 'CSV\nFormat',
-            const Color(0xFF60A5FA)),
+        _buildSupportItem(
+          LucideIcons.fileText,
+          'CSV\nFormat',
+          const Color(0xFF60A5FA),
+        ),
         const SizedBox(width: 12),
-        _buildSupportItem(LucideIcons.file, 'PDF\n(Tables only)',
-            AppTheme.accentColor),
+        _buildSupportItem(
+          LucideIcons.file,
+          'PDF\n(Tables only)',
+          AppTheme.secondaryAccentColor,
+        ),
       ],
     );
   }
@@ -470,8 +478,7 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
   Widget _buildSupportItem(IconData icon, String label, Color color) {
     return Expanded(
       child: Container(
-        padding:
-            const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         decoration: AppTheme.glassDecoration,
         child: Column(
           children: [
@@ -481,7 +488,10 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
               label,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                  fontSize: 11, color: AppTheme.textSecondary, height: 1.4),
+                fontSize: 11,
+                color: AppTheme.textSecondary,
+                height: 1.4,
+              ),
             ),
           ],
         ),
@@ -549,18 +559,29 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 14)),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
                   const SizedBox(height: 2),
-                  Text(subtitle,
-                      style: const TextStyle(
-                          color: AppTheme.textSecondary, fontSize: 12)),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      color: AppTheme.textSecondary,
+                      fontSize: 12,
+                    ),
+                  ),
                 ],
               ),
             ),
-            const Icon(LucideIcons.arrowRight,
-                color: AppTheme.primaryColor, size: 18),
+            const Icon(
+              LucideIcons.arrowRight,
+              color: AppTheme.primaryColor,
+              size: 18,
+            ),
           ],
         ),
       ),
@@ -598,8 +619,7 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
       label: const Text('Try Again'),
       style: OutlinedButton.styleFrom(
         side: const BorderSide(color: AppTheme.primaryColor),
-        padding:
-            const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
       ),
     );
   }
@@ -616,8 +636,10 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
             (item) => Expanded(
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 8,
+                ),
                 decoration: AppTheme.glassDecoration,
                 child: Column(
                   children: [
@@ -633,7 +655,9 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
                     Text(
                       item.$2,
                       style: const TextStyle(
-                          color: AppTheme.textSecondary, fontSize: 11),
+                        color: AppTheme.textSecondary,
+                        fontSize: 11,
+                      ),
                     ),
                   ],
                 ),
@@ -670,8 +694,11 @@ class _PortfolioImportScreenState extends State<PortfolioImportScreen>
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(LucideIcons.shieldCheck,
-            size: 14, color: AppTheme.textSecondary),
+        const Icon(
+          LucideIcons.shieldCheck,
+          size: 14,
+          color: AppTheme.textSecondary,
+        ),
         const SizedBox(width: 6),
         const Text(
           'Files are processed securely and never stored on our servers',

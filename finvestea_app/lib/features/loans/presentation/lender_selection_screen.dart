@@ -157,7 +157,7 @@ class LenderSelectionScreen extends StatelessWidget {
                       ),
                       child: const Icon(
                         LucideIcons.landmark,
-                        color: AppTheme.accentColor,
+                        color: AppTheme.secondaryAccentColor,
                       ),
                     ),
                     const SizedBox(width: 16),

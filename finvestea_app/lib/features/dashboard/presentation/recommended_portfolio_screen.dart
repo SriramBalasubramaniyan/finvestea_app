@@ -179,9 +179,9 @@ class RecommendedPortfolioScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildAllocationItem('Equity', '70%', Colors.blueAccent),
-              _buildAllocationItem('Debt', '20%', Colors.orangeAccent),
-              _buildAllocationItem('Gold', '10%', Colors.amberAccent),
+              _buildAllocationItem('Equity', '70%', const Color(0xFF3FA9FF)),
+              _buildAllocationItem('Debt', '20%', const Color(0xFF4C8DFF)),
+              _buildAllocationItem('Gold', '10%', const Color(0xFF7BD3FF)),
             ],
           ),
           const SizedBox(height: 24),
@@ -194,15 +194,15 @@ class RecommendedPortfolioScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 70,
-                    child: Container(color: Colors.blueAccent),
+                    child: Container(color: const Color(0xFF3FA9FF)),
                   ),
                   Expanded(
                     flex: 20,
-                    child: Container(color: Colors.orangeAccent),
+                    child: Container(color: const Color(0xFF4C8DFF)),
                   ),
                   Expanded(
                     flex: 10,
-                    child: Container(color: Colors.amberAccent),
+                    child: Container(color: const Color(0xFF7BD3FF)),
                   ),
                 ],
               ),

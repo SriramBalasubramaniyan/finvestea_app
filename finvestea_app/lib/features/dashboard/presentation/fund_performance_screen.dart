@@ -124,7 +124,7 @@ class FundPerformanceScreen extends StatelessWidget {
                 'CAGR (3Y)',
                 '24.5%',
                 LucideIcons.activity,
-                AppTheme.accentColor,
+                AppTheme.secondaryAccentColor,
               ),
             ],
           ),

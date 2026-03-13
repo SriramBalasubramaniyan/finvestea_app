@@ -33,7 +33,7 @@ class InvestmentMarketplaceScreen extends StatelessWidget {
                   'ESG focused mutual fund.',
                   '18.5%',
                   LucideIcons.leaf,
-                  Colors.green,
+                  AppTheme.primaryColor,
                 ),
                 const SizedBox(height: 16),
                 _buildOpportunityCard(

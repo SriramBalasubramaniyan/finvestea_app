@@ -49,8 +49,10 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
       duration: const Duration(milliseconds: 600),
       vsync: this,
     )..forward();
-    _fadeAnimation =
-        CurvedAnimation(parent: _fadeController, curve: Curves.easeOut);
+    _fadeAnimation = CurvedAnimation(
+      parent: _fadeController,
+      curve: Curves.easeOut,
+    );
 
     _scrollController.addListener(_onScroll);
   }
@@ -109,7 +111,9 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
   Future<void> _loadAiInsights() async {
     setState(() => _aiLoading = true);
     final result = await PortfolioAiInsightService.generateInsights(
-        _investments, _analysis);
+      _investments,
+      _analysis,
+    );
     if (mounted) {
       setState(() {
         _aiInsights = result;
@@ -162,10 +166,15 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/portfolio-import'),
         backgroundColor: AppTheme.primaryColor,
-        icon: const Icon(LucideIcons.uploadCloud, size: 18, color: Colors.white),
-        label: const Text('Import',
-            style:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        icon: const Icon(
+          LucideIcons.uploadCloud,
+          size: 18,
+          color: Colors.white,
+        ),
+        label: const Text(
+          'Import',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
@@ -217,15 +226,18 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Total Portfolio Value',
-              style: TextStyle(color: Colors.white70, fontSize: 13)),
+          const Text(
+            'Total Portfolio Value',
+            style: TextStyle(color: Colors.white70, fontSize: 13),
+          ),
           const SizedBox(height: 6),
           Text(
             fmt(_analysis.currentValue),
             style: const TextStyle(
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.bold),
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 12),
           Row(
@@ -233,13 +245,13 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
               _buildHeaderStat(
                 'Returns',
                 '${_analysis.isProfit ? '+' : ''}${fmt(_analysis.totalReturns)}',
-                _analysis.isProfit ? Colors.greenAccent : Colors.redAccent,
+                _analysis.isProfit ? AppTheme.primaryColor : Colors.redAccent,
               ),
               _buildHeaderDivider(),
               _buildHeaderStat(
                 '% Return',
                 '${_analysis.isProfit ? '+' : ''}${_analysis.returnPercentage.toStringAsFixed(1)}%',
-                _analysis.isProfit ? Colors.greenAccent : Colors.redAccent,
+                _analysis.isProfit ? AppTheme.primaryColor : Colors.redAccent,
               ),
               _buildHeaderDivider(),
               _buildHeaderStat(
@@ -259,13 +271,18 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style: const TextStyle(color: Colors.white60, fontSize: 10)),
-          Text(value,
-              style: TextStyle(
-                  color: valueColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13)),
+          Text(
+            label,
+            style: const TextStyle(color: Colors.white60, fontSize: 10),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              color: valueColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            ),
+          ),
         ],
       ),
     );
@@ -302,11 +319,11 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
                 curve: Curves.easeInOut,
                 margin: const EdgeInsets.symmetric(horizontal: 2),
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 14, vertical: 8),
+                  horizontal: 14,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
-                  color: isActive
-                      ? AppTheme.primaryColor
-                      : Colors.transparent,
+                  color: isActive ? AppTheme.primaryColor : Colors.transparent,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -314,9 +331,7 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
-                    color: isActive
-                        ? Colors.white
-                        : AppTheme.textSecondary,
+                    color: isActive ? Colors.white : AppTheme.textSecondary,
                   ),
                 ),
               ),
@@ -378,22 +393,32 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
       children: [
         Row(
           children: [
-            _buildStatCard('Holdings', '${_analysis.totalHoldings}',
-                LucideIcons.briefcase, AppTheme.primaryColor),
+            _buildStatCard(
+              'Holdings',
+              '${_analysis.totalHoldings}',
+              LucideIcons.briefcase,
+              AppTheme.primaryColor,
+            ),
             const SizedBox(width: 12),
-            _buildStatCard('Classes', '${_analysis.allocation.length}',
-                LucideIcons.layers, AppTheme.accentColor),
+            _buildStatCard(
+              'Classes',
+              '${_analysis.allocation.length}',
+              LucideIcons.layers,
+              AppTheme.secondaryAccentColor,
+            ),
           ],
         ),
         const SizedBox(height: 12),
-        Row(children: [
-          _buildStatCard(
-            'Performance',
-            _performanceLabel(_analysis.returnPercentage),
-            LucideIcons.trendingUp,
-            _analysis.isProfit ? Colors.greenAccent : Colors.redAccent,
-          )
-        ]),
+        Row(
+          children: [
+            _buildStatCard(
+              'Performance',
+              _performanceLabel(_analysis.returnPercentage),
+              LucideIcons.trendingUp,
+              _analysis.isProfit ? AppTheme.primaryColor : Colors.redAccent,
+            ),
+          ],
+        ),
         const SizedBox(height: 20),
         _buildSubLabel('Asset Allocation'),
         const SizedBox(height: 10),
@@ -419,9 +444,7 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
         Container(
           padding: const EdgeInsets.all(16),
           decoration: AppTheme.glassDecoration,
-          child: Column(
-            children: _investments.map(_buildReturnRow).toList(),
-          ),
+          child: Column(children: _investments.map(_buildReturnRow).toList()),
         ),
       ],
     );
@@ -468,8 +491,11 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
         decoration: AppTheme.glassDecoration,
         child: Column(
           children: [
-            const Icon(LucideIcons.sparkles,
-                size: 36, color: AppTheme.primaryColor),
+            const Icon(
+              LucideIcons.sparkles,
+              size: 36,
+              color: AppTheme.primaryColor,
+            ),
             const SizedBox(height: 12),
             const Text(
               'AI Portfolio Analysis',
@@ -479,7 +505,10 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
             const Text(
               'Tap below to generate AI-powered insights about your portfolio performance.',
               style: TextStyle(
-                  color: AppTheme.textSecondary, fontSize: 13, height: 1.5),
+                color: AppTheme.textSecondary,
+                fontSize: 13,
+                height: 1.5,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -494,15 +523,24 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
     }
     return Column(
       children: [
-        _buildAiCard('Summary', _aiInsights!.performanceSummary,
-            LucideIcons.trendingUp, AppTheme.primaryColor),
-        _buildAiCard('Risk', _aiInsights!.riskSummary, LucideIcons.shieldCheck,
-            const Color(0xFF60A5FA)),
         _buildAiCard(
-            'Diversification',
-            _aiInsights!.diversificationAnalysis,
-            LucideIcons.pieChart,
-            AppTheme.accentColor),
+          'Summary',
+          _aiInsights!.performanceSummary,
+          LucideIcons.trendingUp,
+          AppTheme.primaryColor,
+        ),
+        _buildAiCard(
+          'Risk',
+          _aiInsights!.riskSummary,
+          LucideIcons.shieldCheck,
+          const Color(0xFF60A5FA),
+        ),
+        _buildAiCard(
+          'Diversification',
+          _aiInsights!.diversificationAnalysis,
+          LucideIcons.pieChart,
+          AppTheme.secondaryAccentColor,
+        ),
         _buildSubLabel('Recommendations'),
         const SizedBox(height: 10),
         ..._aiInsights!.suggestions.map(_buildSuggestionCard),
@@ -519,14 +557,19 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
         const SizedBox(height: 12),
         _buildReportCategory('Tax Statements', [
           _ReportItem(
-              'Capital Gains Report', 'FY 2023-24', LucideIcons.fileText),
-          _ReportItem(
-              'Tax P&L Statement', 'FY 2023-24', LucideIcons.fileText),
+            'Capital Gains Report',
+            'FY 2023-24',
+            LucideIcons.fileText,
+          ),
+          _ReportItem('Tax P&L Statement', 'FY 2023-24', LucideIcons.fileText),
         ]),
         const SizedBox(height: 16),
         _buildReportCategory('Performance Reports', [
           _ReportItem(
-              'Monthly Portfolio Review', 'Feb 2024', LucideIcons.pieChart),
+            'Monthly Portfolio Review',
+            'Feb 2024',
+            LucideIcons.pieChart,
+          ),
           _ReportItem('Annual Performance', '2023', LucideIcons.trendingUp),
         ]),
         const SizedBox(height: 16),
@@ -549,15 +592,20 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
     return Text(
       title.toUpperCase(),
       style: const TextStyle(
-          color: AppTheme.textSecondary,
-          fontWeight: FontWeight.w600,
-          fontSize: 10,
-          letterSpacing: 1.0),
+        color: AppTheme.textSecondary,
+        fontWeight: FontWeight.w600,
+        fontSize: 10,
+        letterSpacing: 1.0,
+      ),
     );
   }
 
   Widget _buildStatCard(
-      String label, String value, IconData icon, Color color) {
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -567,14 +615,21 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
           children: [
             Icon(icon, color: color, size: 20),
             const SizedBox(height: 12),
-            Text(value,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: color)),
-            Text(label,
-                style: const TextStyle(
-                    color: AppTheme.textSecondary, fontSize: 10)),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+            Text(
+              label,
+              style: const TextStyle(
+                color: AppTheme.textSecondary,
+                fontSize: 10,
+              ),
+            ),
           ],
         ),
       ),
@@ -591,17 +646,18 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
           Icon(_typeIcon(inv.type), color: _typeColor(inv.type), size: 20),
           const SizedBox(width: 12),
           Expanded(
-              child: Text(inv.name,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 13),
-                  overflow: TextOverflow.ellipsis)),
+            child: Text(
+              inv.name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
           Text(
             '${inv.isProfit ? '+' : ''}${inv.returnPercentage.toStringAsFixed(1)}%',
             style: TextStyle(
-                color: inv.isProfit
-                    ? AppTheme.primaryColor
-                    : Colors.redAccent,
-                fontWeight: FontWeight.bold),
+              color: inv.isProfit ? AppTheme.primaryColor : Colors.redAccent,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
@@ -623,29 +679,40 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
                   color: _typeColor(inv.type).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child:
-                    Icon(_typeIcon(inv.type), color: _typeColor(inv.type), size: 18),
+                child: Icon(
+                  _typeIcon(inv.type),
+                  color: _typeColor(inv.type),
+                  size: 18,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(inv.name,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      inv.name,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 14)),
-                  Text(inv.type,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      inv.type,
                       style: const TextStyle(
-                          color: AppTheme.textSecondary, fontSize: 11)),
-                ],
-              )),
+                        color: AppTheme.textSecondary,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: (inv.isProfit
-                          ? AppTheme.primaryColor
-                          : Colors.redAccent)
-                      .withValues(alpha: 0.15),
+                  color:
+                      (inv.isProfit ? AppTheme.primaryColor : Colors.redAccent)
+                          .withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -667,15 +734,23 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildInvStat('Invested',
-                  PortfolioAnalysisService.formatCurrencyCompact(inv.amountInvested)),
-              _buildInvStat('Current',
-                  PortfolioAnalysisService.formatCurrencyCompact(inv.currentValue)),
-              _buildInvStat('Returns',
-                  PortfolioAnalysisService.formatCurrencyCompact(inv.returns),
-                  color: inv.isProfit
-                      ? AppTheme.primaryColor
-                      : Colors.redAccent),
+              _buildInvStat(
+                'Invested',
+                PortfolioAnalysisService.formatCurrencyCompact(
+                  inv.amountInvested,
+                ),
+              ),
+              _buildInvStat(
+                'Current',
+                PortfolioAnalysisService.formatCurrencyCompact(
+                  inv.currentValue,
+                ),
+              ),
+              _buildInvStat(
+                'Returns',
+                PortfolioAnalysisService.formatCurrencyCompact(inv.returns),
+                color: inv.isProfit ? AppTheme.primaryColor : Colors.redAccent,
+              ),
               _buildInvStat('Units', inv.units.toStringAsFixed(0)),
             ],
           ),
@@ -684,22 +759,30 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
     );
   }
 
-  Widget _buildInvStat(String label, String value,
-      {Color color = Colors.white}) {
+  Widget _buildInvStat(
+    String label,
+    String value, {
+    Color color = Colors.white,
+  }) {
     return Column(
       children: [
-        Text(value,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 12, color: color)),
-        Text(label,
-            style: const TextStyle(
-                color: AppTheme.textSecondary, fontSize: 10)),
+        Text(
+          value,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+            color: color,
+          ),
+        ),
+        Text(
+          label,
+          style: const TextStyle(color: AppTheme.textSecondary, fontSize: 10),
+        ),
       ],
     );
   }
 
-  Widget _buildAiCard(
-      String title, String body, IconData icon, Color color) {
+  Widget _buildAiCard(String title, String body, IconData icon, Color color) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -711,16 +794,25 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(children: [
-            Icon(icon, color: color, size: 18),
-            const SizedBox(width: 8),
-            Text(title,
-                style: TextStyle(fontWeight: FontWeight.bold, color: color))
-          ]),
+          Row(
+            children: [
+              Icon(icon, color: color, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.bold, color: color),
+              ),
+            ],
+          ),
           const SizedBox(height: 8),
-          Text(body,
-              style: const TextStyle(
-                  color: AppTheme.textSecondary, fontSize: 12, height: 1.5)),
+          Text(
+            body,
+            style: const TextStyle(
+              color: AppTheme.textSecondary,
+              fontSize: 12,
+              height: 1.5,
+            ),
+          ),
         ],
       ),
     );
@@ -732,40 +824,44 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border:
-            Border.all(color: AppTheme.accentColor.withValues(alpha: 0.2)),
+        border: Border.all(
+          color: AppTheme.secondaryAccentColor.withValues(alpha: 0.2),
+        ),
       ),
-      child: Text(s,
-          style: const TextStyle(
-              color: AppTheme.textSecondary, fontSize: 12, height: 1.4)),
+      child: Text(
+        s,
+        style: const TextStyle(
+          color: AppTheme.textSecondary,
+          fontSize: 12,
+          height: 1.4,
+        ),
+      ),
     );
   }
 
   Widget _buildAllocationItem(AllocationItem item) {
-    final color =
-        Color(int.parse(item.color.replaceAll('#', '0xFF')));
+    final color = Color(int.parse(item.color.replaceAll('#', '0xFF')));
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
           Container(
-              width: 10,
-              height: 10,
-              decoration: BoxDecoration(
-                  color: color, shape: BoxShape.circle)),
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
           const SizedBox(width: 10),
-          Text(item.category,
-              style: const TextStyle(fontSize: 13)),
+          Text(item.category, style: const TextStyle(fontSize: 13)),
           const Spacer(),
           Text(
             PortfolioAnalysisService.formatCurrencyCompact(item.amount),
-            style: const TextStyle(
-                fontSize: 12, color: AppTheme.textSecondary),
+            style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
           ),
           const SizedBox(width: 12),
-          Text('${item.percentage.toStringAsFixed(1)}%',
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 13)),
+          Text(
+            '${item.percentage.toStringAsFixed(1)}%',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          ),
         ],
       ),
     );
@@ -776,21 +872,22 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
-          Icon(_typeIcon(inv.type),
-              color: _typeColor(inv.type), size: 16),
+          Icon(_typeIcon(inv.type), color: _typeColor(inv.type), size: 16),
           const SizedBox(width: 8),
           Expanded(
-              child: Text(inv.name,
-                  style: const TextStyle(fontSize: 12),
-                  overflow: TextOverflow.ellipsis)),
+            child: Text(
+              inv.name,
+              style: const TextStyle(fontSize: 12),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
           Text(
             PortfolioAnalysisService.formatCurrencyCompact(inv.returns),
             style: TextStyle(
-                color: inv.isProfit
-                    ? AppTheme.primaryColor
-                    : Colors.redAccent,
-                fontSize: 12,
-                fontWeight: FontWeight.bold),
+              color: inv.isProfit ? AppTheme.primaryColor : Colors.redAccent,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
@@ -801,32 +898,49 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title.toUpperCase(),
-            style: const TextStyle(
-                color: AppTheme.primaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 10,
-                letterSpacing: 1.0)),
+        Text(
+          title.toUpperCase(),
+          style: const TextStyle(
+            color: AppTheme.primaryColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 10,
+            letterSpacing: 1.0,
+          ),
+        ),
         const SizedBox(height: 8),
         Container(
           decoration: AppTheme.glassDecoration,
           child: Column(
             children: items
-                .map((item) => ListTile(
-                      leading: Icon(item.icon,
-                          color: AppTheme.primaryColor, size: 20),
-                      title: Text(item.title,
-                          style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold)),
-                      subtitle: Text(item.subtitle,
-                          style: const TextStyle(
-                              fontSize: 11,
-                              color: AppTheme.textSecondary)),
-                      trailing: const Icon(LucideIcons.download,
-                          size: 18, color: AppTheme.primaryColor),
-                      onTap: () {},
-                    ))
+                .map(
+                  (item) => ListTile(
+                    leading: Icon(
+                      item.icon,
+                      color: AppTheme.primaryColor,
+                      size: 20,
+                    ),
+                    title: Text(
+                      item.title,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      item.subtitle,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: AppTheme.textSecondary,
+                      ),
+                    ),
+                    trailing: const Icon(
+                      LucideIcons.download,
+                      size: 18,
+                      color: AppTheme.primaryColor,
+                    ),
+                    onTap: () {},
+                  ),
+                )
                 .toList(),
           ),
         ),
@@ -890,7 +1004,7 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
 
   Color _typeColor(String t) {
     if (t == 'Mutual Fund') return AppTheme.primaryColor;
-    if (t == 'Stock' || t == 'Stocks') return AppTheme.accentColor;
+    if (t == 'Stock' || t == 'Stocks') return AppTheme.secondaryAccentColor;
     if (t == 'ETF') return Colors.blueAccent;
     if (t == 'Gold') return const Color(0xFFF59E0B);
     return Colors.purpleAccent;
@@ -965,7 +1079,10 @@ class _LineChartPainter extends CustomPainter {
 
     for (int i = 0; i < data.length; i++) {
       final x = (i / (data.length - 1)) * size.width;
-      final y = size.height - ((data[i] - minVal) / range * size.height * 0.85) - size.height * 0.05;
+      final y =
+          size.height -
+          ((data[i] - minVal) / range * size.height * 0.85) -
+          size.height * 0.05;
       if (i == 0) {
         fillPath.moveTo(x, y);
         linePath.moveTo(x, y);

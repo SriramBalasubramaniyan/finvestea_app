@@ -44,14 +44,14 @@ class PortfolioAnalysis {
 class PortfolioAnalysisService {
   /// Category colors map (used for charts)
   static const Map<String, String> _categoryColors = {
-    'Mutual Fund': '#22C55E',
-    'Stock': '#D4AF37',
-    'Stocks': '#D4AF37',
-    'Gold': '#F59E0B',
-    'ETF': '#60A5FA',
-    'Bonds': '#A78BFA',
-    'FD': '#FB7185',
-    'Other': '#94A3B8',
+    'Mutual Fund': '#3FA9FF',
+    'Stock': '#4C8DFF',
+    'Stocks': '#4C8DFF',
+    'Gold': '#7BD3FF',
+    'ETF': '#9BD9FF',
+    'Bonds': '#3FA9FF',
+    'FD': '#4C8DFF',
+    'Other': '#A7B8D9',
   };
 
   static String _colorForCategory(String category) {
@@ -73,13 +73,18 @@ class PortfolioAnalysisService {
       );
     }
 
-    final double totalInvested =
-        investments.fold(0, (sum, i) => sum + i.amountInvested);
-    final double currentValue =
-        investments.fold(0, (sum, i) => sum + i.currentValue);
+    final double totalInvested = investments.fold(
+      0,
+      (sum, i) => sum + i.amountInvested,
+    );
+    final double currentValue = investments.fold(
+      0,
+      (sum, i) => sum + i.currentValue,
+    );
     final double totalReturns = currentValue - totalInvested;
-    final double returnPct =
-        totalInvested > 0 ? (totalReturns / totalInvested) * 100 : 0;
+    final double returnPct = totalInvested > 0
+        ? (totalReturns / totalInvested) * 100
+        : 0;
 
     // Build allocation by type
     final Map<String, double> categoryAmounts = {};
@@ -95,16 +100,17 @@ class PortfolioAnalysisService {
         percentage: currentValue > 0 ? (e.value / currentValue) * 100 : 0,
         color: _colorForCategory(e.key),
       );
-    }).toList()
-      ..sort((a, b) => b.amount.compareTo(a.amount));
+    }).toList()..sort((a, b) => b.amount.compareTo(a.amount));
 
     // Top performers (sorted by returnPercentage descending)
     final sorted = List<PortfolioInvestment>.from(investments)
       ..sort((a, b) => b.returnPercentage.compareTo(a.returnPercentage));
 
     final topPerformers = sorted.where((i) => i.isProfit).take(3).toList();
-    final underPerformers =
-        sorted.reversed.where((i) => !i.isProfit).take(3).toList();
+    final underPerformers = sorted.reversed
+        .where((i) => !i.isProfit)
+        .take(3)
+        .toList();
 
     return PortfolioAnalysis(
       totalInvested: totalInvested,

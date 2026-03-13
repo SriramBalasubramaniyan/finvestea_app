@@ -27,7 +27,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                       '- ₹ 5,000',
                       'Successful',
                       LucideIcons.arrowUpRight,
-                      Colors.greenAccent,
+                      AppTheme.primaryColor,
                     ),
                     const SizedBox(height: 24),
                     _buildDateSeparator('Yesterday, 04 Mar 2024'),
@@ -37,7 +37,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                       '+ ₹ 12,450',
                       'Processing',
                       LucideIcons.arrowDownLeft,
-                      Colors.orangeAccent,
+                      AppTheme.secondaryAccentColor,
                     ),
                     _buildTransactionItem(
                       context,
@@ -55,7 +55,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                       '- ₹ 1,00,000',
                       'Successful',
                       LucideIcons.arrowUpRight,
-                      Colors.greenAccent,
+                      AppTheme.primaryColor,
                     ),
                     _buildTransactionItem(
                       context,
@@ -63,7 +63,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                       '- ₹ 2,500',
                       'Successful',
                       LucideIcons.arrowUpRight,
-                      Colors.greenAccent,
+                      AppTheme.primaryColor,
                     ),
                     const SizedBox(height: 24),
                     _buildDateSeparator('20 Feb 2024'),
@@ -73,7 +73,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                       '- ₹ 25,000',
                       'Successful',
                       LucideIcons.arrowUpRight,
-                      Colors.greenAccent,
+                      AppTheme.primaryColor,
                     ),
                   ],
                 ),
@@ -206,16 +206,16 @@ class TransactionHistoryScreen extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: isSuccessful
-                            ? Colors.green.withOpacity(0.1)
-                            : Colors.orange.withOpacity(0.1),
+                            ? AppTheme.primaryColor.withOpacity(0.1)
+                            : AppTheme.secondaryAccentColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
                         status,
                         style: TextStyle(
                           color: isSuccessful
-                              ? Colors.greenAccent
-                              : Colors.orangeAccent,
+                              ? AppTheme.primaryColor
+                              : AppTheme.secondaryAccentColor,
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),

@@ -157,7 +157,7 @@ class CourseListScreen extends StatelessWidget {
                         children: [
                           const Icon(
                             LucideIcons.star,
-                            color: Colors.amber,
+                            color: AppTheme.secondaryAccentColor,
                             size: 14,
                           ),
                           const SizedBox(width: 4),

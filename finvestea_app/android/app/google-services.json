@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "370137706029",
+    "project_id": "finvestea-app",
+    "storage_bucket": "finvestea-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370137706029:android:271531cdc47164c87292a4",
+        "android_client_info": {
+          "package_name": "com.example.finvestea_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfBs82eCzjSc1II3Wi1bzySG8rPE1saYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

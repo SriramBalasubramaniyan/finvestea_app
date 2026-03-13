@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/app_scaffold.dart';
 
 class AcademyHomeScreen extends StatelessWidget {
   const AcademyHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: AppTheme.mainGradient,
-        child: SafeArea(
-          child: Column(
+    return AppScaffold(
+      body: SafeArea(
+        child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -116,8 +115,8 @@ class AcademyHomeScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
+      );
+    
   }
 
   Widget _buildFeaturedCourse(BuildContext context) {

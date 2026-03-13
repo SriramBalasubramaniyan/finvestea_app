@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -20,9 +21,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateToNext() async {
     await Future.delayed(const Duration(seconds: 3));
-    if (mounted) {
-      context.go('/welcome');
-    }
+    if (!mounted) return;
+    final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+    context.go(isLoggedIn ? '/dashboard' : '/welcome');
   }
 
   @override

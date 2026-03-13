@@ -2,64 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme.dart';
+import '../../../core/widgets/app_scaffold.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: AppTheme.mainGradient,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 32),
-                _buildPortfolioCard(context),
-                const SizedBox(height: 32),
-                _buildSectionHeader(
-                  context,
-                  'Explore Opportunities',
-                  onTap: () => context.push('/marketplace'),
-                ),
-                const SizedBox(height: 16),
-                _buildInvestmentCategories(context),
-                const SizedBox(height: 32),
-                _buildSectionHeader(
-                  context,
-                  'Recent Insights',
-                  onTap: () => context.push('/news-feed'),
-                ),
-                const SizedBox(height: 16),
-                _buildInsightCard(
-                  context,
-                  'Market Update',
-                  'NIFTY 50 touches all-time high as tech stocks soar.',
-                  '2 mins ago',
-                  onTap: () => context.push('/academy/article'),
-                ),
-              ],
-            ),
+    return AppScaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(context),
+              const SizedBox(height: 32),
+              _buildPortfolioCard(context),
+              const SizedBox(height: 32),
+              _buildSectionHeader(
+                context,
+                'Explore Opportunities',
+                onTap: () => context.push('/marketplace'),
+              ),
+              const SizedBox(height: 16),
+              _buildInvestmentCategories(context),
+              const SizedBox(height: 32),
+              _buildSectionHeader(
+                context,
+                'Recent Insights',
+                onTap: () => context.push('/news-feed'),
+              ),
+              const SizedBox(height: 16),
+              _buildInsightCard(
+                context,
+                'Market Update',
+                'NIFTY 50 touches all-time high as tech stocks soar.',
+                '2 mins ago',
+                onTap: () => context.push('/academy/article'),
+              ),
+            ],
           ),
         ),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: AppTheme.backgroundColorEnd,
-          border: Border(
-            top: BorderSide(color: Colors.white.withOpacity(0.05)),
-          ),
+          color: AppTheme.surfaceColor,
+          border: Border(top: BorderSide(color: Colors.white.withOpacity(0.1))),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 20,
+              offset: const Offset(0, -5),
+            ),
+          ],
         ),
         child: BottomNavigationBar(
           currentIndex: 0,
           backgroundColor: Colors.transparent,
           elevation: 0,
           selectedItemColor: AppTheme.primaryColor,
-          unselectedItemColor: AppTheme.textSecondary,
+          unselectedItemColor: const Color(0xFF6B7FA6),
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
             switch (index) {
@@ -128,7 +131,7 @@ class DashboardScreen extends StatelessWidget {
             child: const Icon(
               LucideIcons.bell,
               size: 24,
-              color: AppTheme.accentColor,
+              color: AppTheme.primaryColor,
             ),
           ),
         ),

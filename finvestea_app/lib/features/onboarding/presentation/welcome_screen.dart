@@ -80,7 +80,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 48),
                 ElevatedButton(
-                  onPressed: () => context.push('/login'),
+                  onPressed: () => context.push('/register'),
                   child: const Text('Get Started'),
                 ),
                 const SizedBox(height: 24),
