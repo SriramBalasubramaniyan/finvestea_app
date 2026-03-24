@@ -104,8 +104,8 @@ class RecommendedPortfolioScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
-        border: Border(top: BorderSide(color: Colors.white.withOpacity(0.05))),
+        color: Colors.black.withValues(alpha: 0.2),
+        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.05))),
       ),
       child: ElevatedButton(
         onPressed: () => context.push('/marketplace'),
@@ -118,9 +118,9 @@ class RecommendedPortfolioScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor.withOpacity(0.1),
+        color: AppTheme.primaryColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppTheme.primaryColor.withOpacity(0.2)),
+        border: Border.all(color: AppTheme.primaryColor.withValues(alpha: 0.2)),
       ),
       child: Row(
         children: [

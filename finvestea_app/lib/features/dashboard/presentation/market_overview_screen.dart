@@ -102,8 +102,8 @@ class MarketOverviewScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: AppTheme.glassDecoration.copyWith(
         color: isPositive
-            ? AppTheme.primaryColor.withOpacity(0.07)
-            : Colors.red.withOpacity(0.07),
+            ? AppTheme.primaryColor.withValues(alpha: 0.07)
+            : Colors.red.withValues(alpha: 0.07),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +167,7 @@ class MarketOverviewScreen extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: AppTheme.primaryColor.withOpacity(0.1),
+          color: AppTheme.primaryColor.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: const Icon(
@@ -188,8 +188,8 @@ class MarketOverviewScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
           color: stock.isPositive
-              ? AppTheme.primaryColor.withOpacity(0.1)
-              : Colors.red.withOpacity(0.1),
+              ? AppTheme.primaryColor.withValues(alpha: 0.1)
+              : Colors.red.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(

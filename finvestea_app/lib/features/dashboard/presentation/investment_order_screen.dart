@@ -99,7 +99,7 @@ class _InvestmentOrderScreenState extends State<InvestmentOrderScreen> {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: AppTheme.primaryColor.withOpacity(0.1),
+              color: AppTheme.primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(LucideIcons.layers, color: AppTheme.primaryColor),
@@ -189,7 +189,7 @@ class _InvestmentOrderScreenState extends State<InvestmentOrderScreen> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: AppTheme.glassDecoration.copyWith(
-        color: AppTheme.primaryColor.withOpacity(0.05),
+        color: AppTheme.primaryColor.withValues(alpha: 0.05),
       ),
       child: Column(
         children: [
@@ -224,8 +224,8 @@ class _InvestmentOrderScreenState extends State<InvestmentOrderScreen> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
-        border: Border(top: BorderSide(color: Colors.white.withOpacity(0.05))),
+        color: Colors.black.withValues(alpha: 0.2),
+        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.05))),
       ),
       child: ElevatedButton(
         onPressed: () => context.push('/payment-gateway'),

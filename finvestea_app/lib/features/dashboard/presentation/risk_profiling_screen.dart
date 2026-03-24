@@ -81,7 +81,7 @@ class _RiskProfilingScreenState extends State<RiskProfilingScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: isSelected
-            ? AppTheme.primaryColor.withOpacity(0.1)
+            ? AppTheme.primaryColor.withValues(alpha: 0.1)
             : AppTheme.surfaceColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(

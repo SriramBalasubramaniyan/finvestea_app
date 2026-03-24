@@ -136,9 +136,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     // Logout button
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.05),
+                        color: Colors.red.withValues(alpha: 0.05),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.red.withOpacity(0.2)),
+                        border: Border.all(color: Colors.red.withValues(alpha: 0.2)),
                       ),
                       child: ListTile(
                         leading: const Icon(

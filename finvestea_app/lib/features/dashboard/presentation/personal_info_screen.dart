@@ -102,9 +102,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                               height: 96,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: AppTheme.primaryColor.withOpacity(0.1),
+                                color: AppTheme.primaryColor.withValues(alpha: 0.1),
                                 border: Border.all(
-                                  color: AppTheme.primaryColor.withOpacity(0.3),
+                                  color: AppTheme.primaryColor.withValues(alpha: 0.3),
                                   width: 2,
                                 ),
                               ),
@@ -144,10 +144,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: AppTheme.primaryColor.withOpacity(0.1),
+                            color: AppTheme.primaryColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: AppTheme.primaryColor.withOpacity(0.3),
+                              color: AppTheme.primaryColor.withValues(alpha: 0.3),
                             ),
                           ),
                           child: const Row(
@@ -364,7 +364,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
-              color: AppTheme.primaryColor.withOpacity(0.1),
+              color: AppTheme.primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: const Text(

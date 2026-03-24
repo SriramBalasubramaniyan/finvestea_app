@@ -87,7 +87,7 @@ class _TaxSaverCalculatorScreenState extends State<TaxSaverCalculatorScreen> {
                                 ),
                                 decoration: BoxDecoration(
                                   color: selected
-                                      ? AppTheme.primaryColor.withOpacity(0.15)
+                                      ? AppTheme.primaryColor.withValues(alpha: 0.15)
                                       : AppTheme.surfaceColor,
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
@@ -186,9 +186,9 @@ class _TaxSaverCalculatorScreenState extends State<TaxSaverCalculatorScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor.withOpacity(0.05),
+        color: AppTheme.primaryColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppTheme.primaryColor.withOpacity(0.2)),
+        border: Border.all(color: AppTheme.primaryColor.withValues(alpha: 0.2)),
       ),
       child: const Row(
         crossAxisAlignment: CrossAxisAlignment.start,

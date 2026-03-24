@@ -110,7 +110,7 @@ class NewsFeedScreen extends StatelessWidget {
                             selected: isSelected,
                             onSelected: (_) {},
                             selectedColor: AppTheme.primaryColor,
-                            backgroundColor: Colors.white.withOpacity(0.05),
+                            backgroundColor: Colors.white.withValues(alpha: 0.05),
                             side: BorderSide(
                               color: isSelected
                                   ? AppTheme.primaryColor
@@ -155,7 +155,7 @@ class NewsFeedScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppTheme.primaryColor.withOpacity(0.1),
+                      color: AppTheme.primaryColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(
@@ -180,7 +180,7 @@ class NewsFeedScreen extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppTheme.secondaryAccentColor.withOpacity(0.1),
+                      color: AppTheme.secondaryAccentColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(

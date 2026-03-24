@@ -127,12 +127,12 @@ class TransactionHistoryScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: isSelected
             ? AppTheme.primaryColor
-            : Colors.white.withOpacity(0.07),
+            : Colors.white.withValues(alpha: 0.07),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isSelected
               ? AppTheme.primaryColor
-              : Colors.white.withOpacity(0.1),
+              : Colors.white.withValues(alpha: 0.1),
         ),
       ),
       child: Text(
@@ -179,7 +179,7 @@ class TransactionHistoryScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.1),
+              color: iconColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(icon, color: iconColor, size: 18),
@@ -206,8 +206,8 @@ class TransactionHistoryScreen extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: isSuccessful
-                            ? AppTheme.primaryColor.withOpacity(0.1)
-                            : AppTheme.secondaryAccentColor.withOpacity(0.1),
+                            ? AppTheme.primaryColor.withValues(alpha: 0.1)
+                            : AppTheme.secondaryAccentColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(

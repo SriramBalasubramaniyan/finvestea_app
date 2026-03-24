@@ -110,7 +110,7 @@ class LenderSelectionScreen extends StatelessWidget {
         border: Border.all(
           color: recommended
               ? AppTheme.primaryColor
-              : Colors.white.withOpacity(0.1),
+              : Colors.white.withValues(alpha: 0.1),
         ),
       ),
       child: Stack(

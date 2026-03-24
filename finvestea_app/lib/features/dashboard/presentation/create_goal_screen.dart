@@ -171,11 +171,11 @@ class _CreateGoalScreenState extends State<CreateGoalScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
         color: active
-            ? AppTheme.primaryColor.withOpacity(0.1)
-            : Colors.white.withOpacity(0.05),
+            ? AppTheme.primaryColor.withValues(alpha: 0.1)
+            : Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: active ? AppTheme.primaryColor : Colors.white.withOpacity(0.1),
+          color: active ? AppTheme.primaryColor : Colors.white.withValues(alpha: 0.1),
         ),
       ),
       child: Column(
@@ -202,8 +202,8 @@ class _CreateGoalScreenState extends State<CreateGoalScreen> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
-        border: Border(top: BorderSide(color: Colors.white.withOpacity(0.05))),
+        color: Colors.black.withValues(alpha: 0.2),
+        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.05))),
       ),
       child: ElevatedButton(
         onPressed: () => context.push('/recommended-portfolio'),

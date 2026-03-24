@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:go_router/go_router.dart';
@@ -420,10 +419,6 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
           ],
         ),
         const SizedBox(height: 20),
-        _buildSubLabel('Asset Allocation'),
-        const SizedBox(height: 10),
-        _buildMiniAllocationChart(),
-        const SizedBox(height: 20),
         _buildSubLabel('Top Performers'),
         const SizedBox(height: 10),
         ..._analysis.topPerformers.map(_buildInvestmentCard),
@@ -436,11 +431,7 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
     return Column(
       children: [
         _buildSubLabel('Growth Trajectory'),
-        const SizedBox(height: 10),
-        _buildGrowthChart(),
         const SizedBox(height: 20),
-        _buildSubLabel('Return per Investment'),
-        const SizedBox(height: 10),
         Container(
           padding: const EdgeInsets.all(16),
           decoration: AppTheme.glassDecoration,
@@ -462,9 +453,6 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
     return Column(
       children: [
         _buildSubLabel('Portfolio Diversification'),
-        const SizedBox(height: 10),
-        _buildLargeAllocationChart(),
-        const SizedBox(height: 16),
         Container(
           padding: const EdgeInsets.all(16),
           decoration: AppTheme.glassDecoration,
@@ -948,50 +936,6 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
     );
   }
 
-  // ═══════════════════════════ CHART WIDGETS ═══════════════════════════
-
-  Widget _buildMiniAllocationChart() {
-    return Container(
-      height: 140,
-      padding: const EdgeInsets.all(16),
-      decoration: AppTheme.glassDecoration,
-      child: CustomPaint(painter: _PieChartPainter(_analysis.allocation)),
-    );
-  }
-
-  Widget _buildLargeAllocationChart() {
-    return Container(
-      height: 200,
-      padding: const EdgeInsets.all(24),
-      decoration: AppTheme.glassDecoration,
-      child: CustomPaint(painter: _PieChartPainter(_analysis.allocation)),
-    );
-  }
-
-  Widget _buildGrowthChart() {
-    // Data points representing growth trajectory towards actual return %
-    final pct = _analysis.returnPercentage;
-    final points = [
-      0.0,
-      pct * 0.07,
-      pct * 0.18,
-      pct * 0.30,
-      pct * 0.42,
-      pct * 0.54,
-      pct * 0.63,
-      pct * 0.72,
-      pct * 0.80,
-      pct * 0.89,
-      pct * 0.95,
-      pct,
-    ];
-    return Container(
-      height: 160,
-      padding: const EdgeInsets.all(16),
-      decoration: AppTheme.glassDecoration,
-      child: CustomPaint(painter: _LineChartPainter(points)),
-    );
-  }
 
   // ═══════════════════════════ HELPER METHODS ═══════════════════════════
 
@@ -1026,100 +970,3 @@ class _ReportItem {
   _ReportItem(this.title, this.subtitle, this.icon);
 }
 
-// ═══════════════════════════ PIE CHART PAINTER ═══════════════════════════
-
-class _PieChartPainter extends CustomPainter {
-  final List<AllocationItem> data;
-  _PieChartPainter(this.data);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = math.min(size.width, size.height) / 2 - 4;
-    double currentAngle = -math.pi / 2;
-
-    for (var item in data) {
-      final sweep = 2 * math.pi * (item.percentage / 100);
-      canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius),
-        currentAngle,
-        sweep - 0.04,
-        false,
-        Paint()
-          ..color = Color(int.parse(item.color.replaceAll('#', '0xFF')))
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 14
-          ..strokeCap = StrokeCap.round,
-      );
-      currentAngle += sweep;
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-}
-
-// ═══════════════════════════ LINE CHART PAINTER ═══════════════════════════
-
-class _LineChartPainter extends CustomPainter {
-  final List<double> data;
-  _LineChartPainter(this.data);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (data.isEmpty) return;
-
-    final maxVal = data.reduce(math.max);
-    final minVal = data.reduce(math.min);
-    final range = (maxVal - minVal).clamp(1.0, double.infinity);
-
-    // Gradient fill
-    final fillPath = Path();
-    final linePath = Path();
-
-    for (int i = 0; i < data.length; i++) {
-      final x = (i / (data.length - 1)) * size.width;
-      final y =
-          size.height -
-          ((data[i] - minVal) / range * size.height * 0.85) -
-          size.height * 0.05;
-      if (i == 0) {
-        fillPath.moveTo(x, y);
-        linePath.moveTo(x, y);
-      } else {
-        fillPath.lineTo(x, y);
-        linePath.lineTo(x, y);
-      }
-    }
-    fillPath
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-
-    canvas.drawPath(
-      fillPath,
-      Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            AppTheme.primaryColor.withValues(alpha: 0.3),
-            AppTheme.primaryColor.withValues(alpha: 0.0),
-          ],
-        ).createShader(Rect.fromLTWH(0, 0, size.width, size.height)),
-    );
-
-    canvas.drawPath(
-      linePath,
-      Paint()
-        ..color = AppTheme.primaryColor
-        ..strokeWidth = 2.5
-        ..style = PaintingStyle.stroke
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-}

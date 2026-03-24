@@ -139,13 +139,13 @@ class PaymentGatewayScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: selected
-            ? AppTheme.primaryColor.withOpacity(0.1)
-            : Colors.white.withOpacity(0.05),
+            ? AppTheme.primaryColor.withValues(alpha: 0.1)
+            : Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: selected
               ? AppTheme.primaryColor
-              : Colors.white.withOpacity(0.1),
+              : Colors.white.withValues(alpha: 0.1),
         ),
       ),
       child: Row(
@@ -155,7 +155,7 @@ class PaymentGatewayScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: selected
                   ? AppTheme.primaryColor
-                  : Colors.white.withOpacity(0.1),
+                  : Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -212,8 +212,8 @@ class PaymentGatewayScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
-        border: Border(top: BorderSide(color: Colors.white.withOpacity(0.1))),
+        color: Colors.black.withValues(alpha: 0.2),
+        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.1))),
       ),
       child: ElevatedButton(
         onPressed: () => context.push('/mutual-funds/confirm'),

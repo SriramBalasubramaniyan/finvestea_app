@@ -131,7 +131,7 @@ class FundDetailsScreen extends StatelessWidget {
           Text(
             '1Y Return: +24.5%',
             style: TextStyle(
-              color: AppTheme.primaryColor.withOpacity(0.8),
+              color: AppTheme.primaryColor.withValues(alpha: 0.8),
               fontSize: 14,
             ),
           ),
@@ -252,8 +252,8 @@ class FundDetailsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
-        border: Border(top: BorderSide(color: Colors.white.withOpacity(0.05))),
+        color: Colors.black.withValues(alpha: 0.2),
+        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.05))),
       ),
       child: Row(
         children: [

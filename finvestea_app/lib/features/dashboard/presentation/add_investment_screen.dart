@@ -293,7 +293,7 @@ class _AddInvestmentScreenState extends State<AddInvestmentScreen> {
           decoration: AppTheme.glassDecoration,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: DropdownButtonFormField<String>(
-            value: _selectedType,
+            initialValue: _selectedType,
             dropdownColor: AppTheme.backgroundColorEnd,
             decoration: const InputDecoration(
               border: InputBorder.none,

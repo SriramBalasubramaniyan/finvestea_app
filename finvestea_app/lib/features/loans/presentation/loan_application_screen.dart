@@ -102,7 +102,7 @@ class LoanApplicationScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: active
                 ? AppTheme.primaryColor
-                : Colors.white.withOpacity(0.1),
+                : Colors.white.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: Center(
@@ -131,7 +131,7 @@ class LoanApplicationScreen extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 1,
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withValues(alpha: 0.1),
         margin: const EdgeInsets.only(bottom: 20, left: 8, right: 8),
       ),
     );
@@ -171,9 +171,9 @@ class LoanApplicationScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppTheme.primaryColor.withOpacity(0.05),
+        color: AppTheme.primaryColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppTheme.primaryColor.withOpacity(0.2)),
+        border: Border.all(color: AppTheme.primaryColor.withValues(alpha: 0.2)),
       ),
       child: Column(
         children: [
@@ -207,8 +207,8 @@ class LoanApplicationScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
-        border: Border(top: BorderSide(color: Colors.white.withOpacity(0.1))),
+        color: Colors.black.withValues(alpha: 0.2),
+        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.1))),
       ),
       child: ElevatedButton(
         onPressed: () => context.push('/loans/lender-selection'),

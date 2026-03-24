@@ -21,10 +21,10 @@ class OrderConfirmationScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(36),
                   decoration: BoxDecoration(
-                    color: AppTheme.primaryColor.withOpacity(0.1),
+                    color: AppTheme.primaryColor.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: AppTheme.primaryColor.withOpacity(0.3),
+                      color: AppTheme.primaryColor.withValues(alpha: 0.3),
                       width: 2,
                     ),
                   ),
