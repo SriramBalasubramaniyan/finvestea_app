@@ -1,3 +1,5 @@
+import 'package:finvestea_app/core/services/portfolio_service.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:go_router/go_router.dart';
@@ -41,7 +43,7 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
   @override
   void initState() {
     super.initState();
-    _investments = PortfolioDocumentParser.getDemoPortfolio();
+    _investments = _getHoldings();
     _analysis = PortfolioAnalysisService.analyze(_investments);
 
     _fadeController = AnimationController(
@@ -54,6 +56,159 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
     );
 
     _scrollController.addListener(_onScroll);
+  }
+  
+  List<PortfolioInvestment> _getHoldings() {
+    final Map<String, PortfolioInvestment> grouped = {};
+
+    for (HoldingEntry p in PortfolioService().getHoldings()) {
+      final key = '${p.holding.name}_${p.holding.assetType}';
+
+      if (grouped.containsKey(key)) {
+        final existing = grouped[key]!;
+
+        grouped[key] = PortfolioInvestment(
+          name: existing.name,
+          type: existing.type,
+          amountInvested: existing.amountInvested + p.holding.costBasis,
+          currentValue: existing.currentValue + p.holding.currentValue,
+          dateOfInvestment: existing.dateOfInvestment,
+          units: existing.units + p.holding.quantity,
+          returns: (existing.currentValue + p.holding.currentValue) -
+                  (existing.amountInvested + p.holding.costBasis),
+        );
+      } else {
+        grouped[key] = PortfolioInvestment(
+          name: p.holding.name,
+          type: p.holding.assetType,
+          amountInvested: p.holding.costBasis,
+          currentValue: p.holding.currentValue,
+          dateOfInvestment: p.holding.purchaseDate,
+          units: p.holding.quantity,
+          returns: p.holding.currentValue - p.holding.costBasis,
+        );
+      }
+    }
+
+    _getInvestmentByType(grouped.values.toList());
+
+    return grouped.values.toList();
+  }
+
+  // bar chart growth trajectory
+  int touchedGroupIndex = -1;
+  int touchedRodIndex = -1;
+
+  List<BarChartGroupData> _getBarGroups(List<PortfolioInvestment> data) {
+    return List.generate(data.length, (index) {
+      final item = data[index];
+      return BarChartGroupData(
+        x: index,
+        barsSpace: 4,
+        barRods: [
+          BarChartRodData(
+            toY: item.amountInvested,
+            width: 8,
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          BarChartRodData(
+            toY: item.currentValue,
+            width: 8,
+            color: Colors.green,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ],
+      );
+    });
+  }
+
+  Widget _buildSelectedBarInfo() {
+  if (touchedGroupIndex == -1) return SizedBox();
+
+  final item = _investments[touchedGroupIndex];
+
+  final isInvested = touchedRodIndex == 0;
+
+  final value = isInvested
+      ? item.amountInvested
+      : item.currentValue;
+
+  final label = isInvested ? "Invested" : "Current";
+
+  return Column(
+    children: [
+      SizedBox(height: 10),
+      Text(
+        item.name,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      Text("$label: ₹ ${value.toStringAsFixed(2)}"),
+    ],
+  );
+}
+
+  //Pie Chart Investment Allocation
+  int touchedPieIndex = -1;
+
+  Map<String, double> _getInvestmentByType(List<PortfolioInvestment> data) {
+    final Map<String, double> result = {};
+
+    for (var item in data) {
+      if (result.containsKey(item.type)) {
+        result[item.type] = result[item.type]! + item.amountInvested;
+      } else {
+        result[item.type] = item.amountInvested;
+      }
+    }
+    return result;
+  }
+
+  List<PieChartSectionData> _getPieSections(Map<String, double> dataMap) {
+    int i = 0;
+    final colors = [
+      Colors.blue,
+      Colors.red,
+      Colors.green,
+      Colors.orange,
+      Colors.purple,
+      Colors.brown,
+      Colors.black
+    ];
+
+    return dataMap.entries.map((entry) {
+        final isTouched = i == touchedPieIndex;
+
+        final section = PieChartSectionData(
+          value: entry.value,
+          color: colors[i % colors.length],
+          // color: Colors.primaries[i % Colors.primaries.length], //allocates color dynamically
+          radius: isTouched ? 70 : 60,
+          title: ''
+        );
+        i++;
+        return section;
+      }).toList();    
+  }
+
+  Widget _buildSelectedLabel(Map<String, double> dataMap) {
+    if (touchedPieIndex == -1) return SizedBox();
+
+    final entry = dataMap.entries.toList()[touchedPieIndex];
+
+    return Column(
+      children: [
+        SizedBox(height: 10),
+        Text(
+          entry.key,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          "₹ ${entry.value.toStringAsFixed(2)}",
+          style: TextStyle(color: Colors.white),
+        ),
+      ],
+    );
   }
 
   // ── Scroll detection: update active tab based on which section is near top ──
@@ -149,11 +304,13 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
                     children: [
                       _buildSection(0, _buildOverviewContent()),
+                      if(_investments.isNotEmpty) ...[
                       _buildSection(1, _buildReturnsContent()),
                       _buildSection(2, _buildHoldingsContent()),
                       _buildSection(3, _buildAllocationContent()),
                       _buildSection(4, _buildAiInsightsContent()),
                       _buildDocumentsBlock(),
+                      ]
                     ],
                   ),
                 ),
@@ -163,7 +320,7 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.push('/portfolio-import'),
+        onPressed: () => _importAndUpdateHoldings(),
         backgroundColor: AppTheme.primaryColor,
         icon: const Icon(
           LucideIcons.uploadCloud,
@@ -176,6 +333,14 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
         ),
       ),
     );
+  }
+
+  _importAndUpdateHoldings() async {
+    await context.push('/portfolio-import');
+    setState(() {
+    _investments = _getHoldings();
+    _analysis = PortfolioAnalysisService.analyze(_investments);
+    });
   }
 
   // ═══════════════════════════ APP BAR ═══════════════════════════
@@ -197,7 +362,7 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
           ),
           IconButton(
             icon: const Icon(LucideIcons.upload, color: AppTheme.primaryColor),
-            onPressed: () => context.push('/portfolio-import'),
+            onPressed: () => _importAndUpdateHoldings(),
           ),
         ],
       ),
@@ -309,7 +474,7 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.all(4),
         child: Row(
-          children: List.generate(_tabLabels.length, (i) {
+          children: List.generate( _investments.isNotEmpty ? _tabLabels.length : 1, (i) {
             final isActive = _activeTab == i;
             return GestureDetector(
               onTap: () => _scrollToSection(i),
@@ -419,9 +584,11 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
           ],
         ),
         const SizedBox(height: 20),
-        _buildSubLabel('Top Performers'),
-        const SizedBox(height: 10),
-        ..._analysis.topPerformers.map(_buildInvestmentCard),
+        if(_investments.isNotEmpty) ...[
+          _buildSubLabel('Top Performers'),
+          const SizedBox(height: 10),
+          ..._analysis.topPerformers.map(_buildInvestmentCard),
+        ]
       ],
     );
   }
@@ -435,7 +602,54 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
         Container(
           padding: const EdgeInsets.all(16),
           decoration: AppTheme.glassDecoration,
-          child: Column(children: _investments.map(_buildReturnRow).toList()),
+          // child: Column(children: _investments.map(_buildReturnRow).toList()),
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SizedBox(
+                  width: _investments.length * 80,
+                  height: 300,
+                  child: BarChart(
+                    BarChartData(
+                      barGroups: _getBarGroups(_investments),
+                      barTouchData: BarTouchData(
+                        handleBuiltInTouches: false,
+                        touchCallback: (event, response) {
+                          setState(() {
+                            if (!event.isInterestedForInteractions ||
+                                response == null ||
+                                response.spot == null) {
+                              touchedGroupIndex = -1;
+                              touchedRodIndex = -1;
+                              return;
+                            }
+
+                            touchedGroupIndex =
+                                response.spot!.touchedBarGroupIndex;
+                            touchedRodIndex =
+                                response.spot!.touchedRodDataIndex;
+                          });
+                        },
+                      ),
+                      titlesData: FlTitlesData(
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        rightTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              _buildSelectedBarInfo(),
+            ],
+          ),
         ),
       ],
     );
@@ -457,7 +671,32 @@ class _PortfolioReportsScreenState extends State<PortfolioReportsScreen>
           padding: const EdgeInsets.all(16),
           decoration: AppTheme.glassDecoration,
           child: Column(
-            children: _analysis.allocation.map(_buildAllocationItem).toList(),
+            // children: _analysis.allocation.map(_buildAllocationItem).toList(),
+            children: [
+              SizedBox(
+                height: 250,
+                child: PieChart(
+                  PieChartData(
+                    sections: _getPieSections(_getInvestmentByType(_investments)),
+                    pieTouchData: PieTouchData(
+                      touchCallback: (event, response) {
+                        setState(() {
+                          if (!event.isInterestedForInteractions ||
+                              response == null ||
+                              response.touchedSection == null) {
+                            touchedPieIndex = -1;
+                            return;
+                          }
+                          touchedPieIndex =
+                              response.touchedSection!.touchedSectionIndex;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              _buildSelectedLabel(_getInvestmentByType(_investments)),
+            ],
           ),
         ),
       ],

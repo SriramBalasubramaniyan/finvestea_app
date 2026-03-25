@@ -1,7 +1,9 @@
+import 'package:finvestea_app/core/services/portfolio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../../../core/theme.dart';
+import '../../../core/services/auth_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -188,9 +190,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.redAccent,
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     Navigator.of(ctx).pop();
                                     context.go('/welcome');
+                                    AuthService().signOut();
+                                    PortfolioService().clearHoldings();
                                   },
                                   child: const Text('Log Out'),
                                 ),

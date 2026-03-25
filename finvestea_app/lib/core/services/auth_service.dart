@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'package:finvestea_app/core/services/firestore_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as dev;
 
 // ─── AuthUser ──────────────────────────────────────────────────────────────────
 
@@ -35,6 +38,11 @@ class AuthService {
   final _controller = StreamController<AuthUser?>.broadcast();
 
   AuthUser? get currentUser => _currentUser;
+
+  set setCurrentUser(AuthUser? user) {
+    _currentUser = user;
+  }
+
   Stream<AuthUser?> get authStateChanges => _controller.stream;
 
   // ─────────────────────────────────────────
@@ -52,19 +60,35 @@ class AuthService {
         message: 'Please enter a valid email address.',
       );
     }
+    
     if (password.isEmpty) {
       throw const AuthException(
         code: 'wrong-password',
         message: 'Incorrect password. Please try again.',
       );
     }
-    _currentUser = AuthUser(
-      uid: 'local_${email.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_')}',
-      email: email,
-      displayName: email.split('@').first,
-    );
-    _controller.add(_currentUser);
-    return _currentUser!;
+
+    try {
+      final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password
+      );
+      
+      final uId = response.user?.uid ?? 'local_${email.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_')}';
+      _currentUser = AuthUser(
+        uid: uId,
+        email: email,
+        displayName: response.user?.displayName ?? email.split('@').first,
+      );
+      _controller.add(_currentUser);
+      return _currentUser!;
+    } on FirebaseAuthException catch(e,a) {
+        dev.log("Sign in FirebaseAuthException:${e.toString()} $a");
+        throw AuthException(
+          code: e.code,
+          message: getErrorMessage(AuthException(code: e.code))
+        );
+    }
   }
 
   Future<AuthUser> signUpWithEmail({
@@ -78,19 +102,36 @@ class AuthService {
         message: 'Please enter a valid email address.',
       );
     }
+  
     if (password.length < 6) {
       throw const AuthException(
         code: 'weak-password',
         message: 'Password must be at least 6 characters.',
       );
     }
-    _currentUser = AuthUser(
-      uid: 'local_${DateTime.now().millisecondsSinceEpoch}',
-      email: email,
-      displayName: email.split('@').first,
-    );
-    _controller.add(_currentUser);
-    return _currentUser!;
+
+    try {
+      final response = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password
+      );
+      
+      final uId = response.user?.uid ?? 'local_${email.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_')}';
+      _currentUser = AuthUser(
+        uid: uId,
+        email: email,
+        displayName: response.user?.displayName ?? email.split('@').first,
+      );
+      _controller.add(_currentUser);
+      addFireUser(_currentUser!);
+      return _currentUser!;
+    } on FirebaseAuthException catch(e,a) {
+        dev.log("Sign in FirebaseAuthException:${e.toString()} $a");
+        throw AuthException(
+          code: e.code,
+          message: getErrorMessage(AuthException(code: e.code))
+        );
+    }
   }
 
   Future<void> sendPasswordReset(String email) async {
@@ -156,6 +197,7 @@ class AuthService {
   Future<void> signOut() async {
     _currentUser = null;
     _controller.add(null);
+    await FirebaseAuth.instance.signOut();
   }
 
   String getErrorMessage(AuthException e) {

@@ -1,3 +1,5 @@
+import 'package:finvestea_app/core/services/portfolio_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -22,7 +24,17 @@ class _SplashScreenState extends State<SplashScreen> {
   void _navigateToNext() async {
     await Future.delayed(const Duration(seconds: 3));
     if (!mounted) return;
+    final user = FirebaseAuth.instance.currentUser;
+    if(user != null) {
+      AuthService().setCurrentUser = AuthUser(
+        uid: user.uid,
+        email: user.email!,displayName:
+        user.displayName ?? user.email!.split('@').first
+      );
+      await PortfolioService().addFromFireStore();
+    }
     final isLoggedIn = AuthService().currentUser != null;
+    if (!mounted) return;
     context.go(isLoggedIn ? '/dashboard' : '/welcome');
   }
 

@@ -1,26 +1,51 @@
 {
   "project_info": {
-    "project_number": "370137706029",
-    "project_id": "finvestea-app",
-    "storage_bucket": "finvestea-app.firebasestorage.app"
+    "project_number": "958283234449",
+    "project_id": "finvestea-app-8ade2",
+    "storage_bucket": "finvestea-app-8ade2.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:370137706029:android:271531cdc47164c87292a4",
+        "mobilesdk_app_id": "1:958283234449:android:079a603b841aa97550d330",
         "android_client_info": {
           "package_name": "com.example.finvestea_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "958283234449-bsamdq5rpo4c9s3153a9n4k6r3bumtdc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finvestea_app",
+            "certificate_hash": "01e4330b28b2b7dfe7d36e11d3f01af364267f5d"
+          }
+        },
+        {
+          "client_id": "958283234449-8bdadc1pgikmgprqhpqeium3djqo4a6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCfBs82eCzjSc1II3Wi1bzySG8rPE1saYQ"
+          "current_key": "AIzaSyCuBNrQiUXxrloHg7KGyEx4woLcT8aaVB0"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958283234449-8bdadc1pgikmgprqhpqeium3djqo4a6f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "958283234449-8199a22shol9oe492t3bsl1ljpd8tl2s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.finvesteaApp"
+              }
+            }
+          ]
         }
       }
     }

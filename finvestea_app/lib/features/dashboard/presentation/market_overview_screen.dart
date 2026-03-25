@@ -45,7 +45,7 @@ class MarketOverviewScreen extends StatelessWidget {
                         label: const Text('View Market News'),
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: AppTheme.primaryColor),
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 14,horizontal: 10),
                         ),
                       ),
                     ],

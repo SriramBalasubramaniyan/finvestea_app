@@ -117,6 +117,8 @@ class _AddInvestmentScreenState extends State<AddInvestmentScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        _buildTypeDropdown(),
+                        const SizedBox(height: 20),
                         _buildField(
                           label: 'Investment Name',
                           controller: _nameCtrl,
@@ -125,8 +127,6 @@ class _AddInvestmentScreenState extends State<AddInvestmentScreen> {
                           validator: (v) =>
                               v == null || v.trim().isEmpty ? 'Required' : null,
                         ),
-                        const SizedBox(height: 20),
-                        _buildTypeDropdown(),
                         const SizedBox(height: 20),
                         _buildField(
                           label: 'Amount Invested (₹)',
@@ -305,9 +305,7 @@ class _AddInvestmentScreenState extends State<AddInvestmentScreen> {
                 size: 20,
               ),
             ),
-            items: _types
-                .map((t) => DropdownMenuItem(value: t, child: Text(t)))
-                .toList(),
+            items: _types.map((t) => DropdownMenuItem(value: t, child: Text(t))).toList(),
             onChanged: (v) => setState(() => _selectedType = v ?? 'Stock'),
           ),
         ),

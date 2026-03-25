@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:finvestea_app/core/services/auth_service.dart';
+import 'package:finvestea_app/core/services/firestore_service.dart';
 import '../../features/dashboard/services/portfolio_document_parser.dart';
 
 // ─── Holding ──────────────────────────────────────────────────────────────────
@@ -178,6 +180,10 @@ class PortfolioService {
     }
   }
 
+  getHoldings() => List.unmodifiable(_holdings);
+ 
+  clearHoldings() => _holdings.clear();
+
   /// Stream holdings for a specific portfolio.
   Stream<List<HoldingEntry>> holdingsStream(String portfolioId) async* {
     yield _holdings
@@ -203,10 +209,20 @@ class PortfolioService {
       purchaseDate: item.dateOfInvestment,
       assetType: item.type,
       createdAt: DateTime.now(),
-      portfolioId: 'default_portfolio',
+      portfolioId: AuthService().currentUser!.uid,
       notes: notes.isEmpty ? null : notes,
     );
     _holdings.add(HoldingEntry(id: _nextId(), holding: holding));
+    addFireHolding(holding);
+    _emit();
+  }
+
+  Future<void> addFromFireStore() async {
+    final list = await getFireHoldings();
+    _holdings.clear();
+    for (Holding h in list) {
+      _holdings.add(HoldingEntry(id: _nextId(), holding: h));
+    }
     _emit();
   }
 
@@ -252,9 +268,10 @@ class PortfolioService {
         purchaseDate: item.dateOfInvestment,
         assetType: item.type,
         createdAt: DateTime.now(),
-        portfolioId: 'default_portfolio',
+        portfolioId: AuthService().currentUser!.uid,
       );
       _holdings.add(HoldingEntry(id: _nextId(), holding: holding));
+      addFireHolding(holding);
     }
     _emit();
     return items.length;

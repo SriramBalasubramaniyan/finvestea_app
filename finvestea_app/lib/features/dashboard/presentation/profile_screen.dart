@@ -1,7 +1,9 @@
+import 'package:finvestea_app/core/services/portfolio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../../../core/theme.dart';
+import '../../../core/services/auth_service.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -159,13 +161,13 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'John Doe',
+          Text(
+            AuthService().currentUser?.displayName ?? 'John Doe',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
-          const Text(
-            'john.doe@example.com',
+          Text(
+            AuthService().currentUser?.email ?? 'john.doe@example.com',
             style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
           ),
           const SizedBox(height: 16),
@@ -234,9 +236,11 @@ class ProfileScreen extends StatelessWidget {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-            onPressed: () {
+            onPressed: () async {
               Navigator.of(ctx).pop();
               context.go('/welcome');
+              AuthService().signOut();
+              PortfolioService().clearHoldings();
             },
             child: const Text('Log Out'),
           ),

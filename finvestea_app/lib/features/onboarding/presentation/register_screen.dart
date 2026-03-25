@@ -1,3 +1,4 @@
+import 'package:finvestea_app/core/services/portfolio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -56,6 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     try {
       await _authService.signUpWithEmail(email: email, password: password);
+      await PortfolioService().addFromFireStore();
       // authStateChanges stream in main.dart handles redirect to /dashboard
     } on AuthException catch (e) {
       if (!mounted) return;

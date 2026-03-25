@@ -1,3 +1,4 @@
+import 'package:finvestea_app/core/services/portfolio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -17,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _authService = AuthService();
 
-  _AuthTab _tab = _AuthTab.phone;
+  _AuthTab _tab = _AuthTab.email;
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -96,6 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       await _authService.signInWithEmail(email: email, password: password);
+      await PortfolioService().addFromFireStore();
       // authStateChanges in main.dart handles navigation to /dashboard
     } on AuthException catch (e) {
       if (!mounted) return;
@@ -190,20 +192,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 20),
                       if (_errorMessage != null) _buildErrorBanner(),
                       const SizedBox(height: 16),
-                      if (_tab == _AuthTab.email)
-                        Center(
-                          child: TextButton(
-                            onPressed: _isLoading ? null : _forgotPassword,
-                            child: const Text(
-                              'Forgot Password?',
-                              style: TextStyle(
-                                color: AppTheme.primaryColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                      const SizedBox(height: 12),
+                      // if (_tab == _AuthTab.email)
+                      //   Center(
+                      //     child: TextButton(
+                      //       onPressed: _isLoading ? null : _forgotPassword,
+                      //       child: const Text(
+                      //         'Forgot Password?',
+                      //         style: TextStyle(
+                      //           color: AppTheme.primaryColor,
+                      //           fontSize: 14,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // const SizedBox(height: 12),
                       Text(
                         'By continuing, you agree to our Terms of Service and Privacy Policy.',
                         style: TextStyle(
@@ -258,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.all(4),
       child: Row(
         children: [
-          _buildTabItem(_AuthTab.phone, LucideIcons.smartphone, 'Mobile OTP'),
+          // _buildTabItem(_AuthTab.phone, LucideIcons.smartphone, 'Mobile OTP'),
           _buildTabItem(_AuthTab.email, LucideIcons.mail, 'Email'),
         ],
       ),
@@ -479,7 +481,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildFooter() {
-    final isPhone = _tab == _AuthTab.phone;
+    final isEmail = _tab == _AuthTab.email;
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -489,7 +491,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       child: ElevatedButton(
-        onPressed: _isLoading ? null : (isPhone ? _sendOTP : _signInWithEmail),
+        onPressed: _isLoading ? null : (isEmail ? _signInWithEmail : _sendOTP),
         child: _isLoading
             ? const SizedBox(
                 height: 20,
@@ -499,7 +501,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
               )
-            : Text(isPhone ? 'Send OTP' : 'Log In'),
+            : Text(isEmail ? 'Log In' : 'Send OTP'),
       ),
     );
   }
